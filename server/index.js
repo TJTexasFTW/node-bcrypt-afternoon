@@ -4,6 +4,7 @@ const session = require('express-session');
 // const bcrypt = require('bcryptjs');
 const massive = require('massive');
 const PORT = 4000;
+const ac = require('./controllers/authController');
 
 const app = express();
 
@@ -21,11 +22,13 @@ massive(CONNECTION_STRING)
     app.use(session({
         resave: true,
         saveUninitialized: false,
-        secret: SESSSION_SECRET,
+        secret: SESSION_SECRET,
        cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7 }
     }));
         
+
+app.post("/auth/register", ac.register)
 
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
