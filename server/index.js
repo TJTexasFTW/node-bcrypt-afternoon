@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const massive = require('massive');
 const PORT = 4000;
 const ac = require('./controllers/authController');
@@ -28,7 +28,8 @@ massive(CONNECTION_STRING)
     }));
         
 
-app.post("/auth/register", ac.register)
+app.post("/auth/register", ac.register);
+app.post("/auth/login", ac.login);
 
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

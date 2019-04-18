@@ -51,6 +51,12 @@ export default class Header extends Component {
     // axios GET to /auth/logout here
   }
 
+  click = () => {
+    axios.post("/auth/login", { username: "hello", password: "hey" }).then(response => {
+      console.log(response);
+    })
+  }
+
   render() {
     const { username, password } = this.state;
     const { user } = this.props;
@@ -85,6 +91,7 @@ export default class Header extends Component {
             <button onClick={this.register} id="reg">
               Register
             </button>
+            <button onClick={this.click}>hit</button>
           </div>
         )}
       </div>

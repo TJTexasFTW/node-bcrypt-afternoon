@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 
-const register = async (req, res) => {
+module.exports = {
+register: async (req, res) => {
     //destructure username, password and isAdmin from req.body
     let { username, password, isAdmin } = req.body;
 
@@ -23,26 +24,32 @@ const register = async (req, res) => {
         .register_user([isAdmin, username, hash])
         .catch(err => console.log(err));
         const user = registeredUser[0];
-        console.log("Reg user:", registeredUser);
+        // console.log("Reg user:", registeredUser);
         req.session.user = {isAdmin: user.is_admin, id: user.id, username: user.username}
         res.status(201).json(req.session.user);
     }
 
-}
+},
 
-// const result = 
-
-// app.post("/auth/signup", async (req, res) => {
-//     // Signup
-//     const {username, password} = req.body;
-//     const hash = await bcrypt.hash(password, 10).catch(err => console.log(err));
-//     const dbResult = await req.app
-//       .get("db")
-//       .addUser([username, hash])
-//       .catch(err => console.log(err));
-//       req.session.user = username;
+login: async (req, res) => {
+    //destructure username and password from req.body
+    console.log("we r here");
+    let { username, password } = req.body;
+    const foundUser = await req.app
+        .get('db')
+        .get_user([username]);
+        // .catch(err => console.log(err));
+    const user = foundUser[0];
+    console.log("USER:", user);
+    if (!user) {
+        return res.status(401).json('User  not found. Please register as a new user before logging in.');
+    } 
+    const isAuthenticated = bcrypt.compareSync(password, user.hash);
+    if (!isAuthenticated) {
+      return res.status(403).send('Incorrect password');
+    }
+    req.session.user = { isAdmin: user.is_admin, id: user.id, username: user.username };
+    return res.json(req.session.user);
+  }
   
-//       res.json(dbResult);
-//   });
-
-module.exports = {register}
+}
