@@ -33,5 +33,10 @@ const bcrypt = require('bcryptjs');
             return res.status(200).send(userTreasure);
           },
 
+          getAllTreasure: async (req, res) => {
+            //Destructure treasureURL from req.body and id from req.session.user           
+            const getAllFuckingTreasure = await req.app.get('db').get_all_treasure();
+            return res.status(200).send(getAllFuckingTreasure);
+          },          
 
       };
