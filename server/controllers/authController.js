@@ -50,6 +50,13 @@ login: async (req, res) => {
     }
     req.session.user = { isAdmin: user.is_admin, id: user.id, username: user.username };
     return res.json(req.session.user);
+  },
+
+
+  logout: async (req, res) => {
+    //destructure username and password from req.body
+    console.log("destroy this shit");
+    req.session.destroy()
+    return res.status(200).json('Destroy this shit!');
   }
-  
 }

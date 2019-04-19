@@ -30,6 +30,7 @@ massive(CONNECTION_STRING)
 
 app.post("/auth/register", ac.register);
 app.post("/auth/login", ac.login);
+app.get('/auth/logout', ac.logout);
 
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
