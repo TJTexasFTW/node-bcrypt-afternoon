@@ -33,6 +33,7 @@ app.post("/auth/register", ac.register);
 app.post("/auth/login", ac.login);
 app.get('/auth/logout', ac.logout);
 app.get('/api/treasure/dragon', treasureController.dragonTreasure);
+app.get('/api/treasure/user', treasureController.getUserTreasure);
 
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
