@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const massive = require('massive');
 const PORT = 4000;
 const ac = require('./controllers/authController');
+const treasureController = require('./controllers/treasureController');
 
 const app = express();
 
@@ -31,6 +32,7 @@ massive(CONNECTION_STRING)
 app.post("/auth/register", ac.register);
 app.post("/auth/login", ac.login);
 app.get('/auth/logout', ac.logout);
+app.get('/api/treasure/dragon', treasureController.dragonTreasure);
 
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
